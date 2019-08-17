@@ -12,9 +12,12 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "experimentalDecorators": true
   },
-  "exclude": [
-    "**/*.less"
+  "typeRoots": [
+    "node_modules/@types"
   ]
+
 }

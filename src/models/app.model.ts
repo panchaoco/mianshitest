@@ -1,13 +1,14 @@
 import { EffectsCommandMap, DvaInstance } from "dva";
+import request from '../utils/fetch'
 
 export default {
-  namespace: 'home',
+  namespace: 'app',
   state: {
 
   },
   effects: {
     *getRecommendData({ payload }: any, { call, put, select }: EffectsCommandMap) {
-      const res = yield call(require('../service/recomendData.json'))
+      const res = yield call(request('/api/getRecommendData'))
     }
   },
 
