@@ -8,30 +8,24 @@ export default class AppListView extends React.PureComponent<AppListViewProps, A
 
   public constructor(props) {
     super(props);
-    this.state = {
-      entry: []
-    }
   }
 
   public componentWillReceiveProps(nextProps: Readonly<AppListViewProps>, nextContext: any): void {
-    this.setState({
-      // entry: this.state.entry.length > 0 ? this.state.entry.concat(nextProps.appList) : nextProps.appList
-    })
+
   }
 
   public render() {
-    const appList = this.props.appList;
+    const appData = this.props.appData;
     return (
       <div className={styles.appList}>
-
         <ul>
           {
-            appList ? appList.entry.map((item, index) => {
+            appData ? appData.entry.map((item, index) => {
               const image = item["im:image"][2].label;
               const name = item["im:name"].label;
               const category = item.category.attributes.label;
               return (
-                <li key={index}>
+                <li key={index.toString()}>
                   <strong>{index + 1}</strong>
                   <img src={image} alt=""/>
                   <div className={styles.info}>
@@ -49,7 +43,7 @@ export default class AppListView extends React.PureComponent<AppListViewProps, A
 }
 
 interface AppListViewProps {
-  appList?: ListData
+  appData?: ListData
 }
 
 interface AppListViewState extends ListData{

@@ -1,5 +1,10 @@
 export interface ListData {
-  entry: EntryData[]
+  entry: EntryData[],
+  attributes: {
+    total: number,
+    page: number,
+    page_size: number
+  }
 }
 
 export interface EntryData {

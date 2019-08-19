@@ -4,8 +4,9 @@ import { getRecommendData, getAppListData } from "@/services/app.service";
 export default {
   namespace: 'app',
   state: {
-    recommendData: null,
-    appList: null
+    recommendData: [],
+    appData: null,
+    isPullUpLoad: false
   },
   effects: {
     *getRecommendData({ payload }: any, { call, put, select }: EffectsCommandMap) {
@@ -13,31 +14,46 @@ export default {
       yield put({
         type: 'updateRecommendData',
         payload: {
-          recommendData: res.feed
+          recommendData: res.feed.entry
         }
       })
     },
     *getAppListData({ payload }: any, { call, put, select }: EffectsCommandMap) {
+      yield put({
+        type: 'updatePullUpLoad',
+        payload: {
+          isPullUpLoad: true
+        }
+      })
       const res = yield call(getAppListData, payload);
-      let data = yield select(({app}) => ({app}));
-      console.log('data', data);
-      if (data.appList) {
-        data.appList.entry.concat(res.feed.entry);
+      let { appData } = yield select(({app}) => ({appData: app.appData}));
+      if (!appData) {
+        appData = Object.assign({}, {
+          attributes: res.feed.attributes,
+          entry: res.feed.entry
+        })
       } else {
-        data = res.feed;
+        appData.entry = appData.entry.concat(res.feed.entry)
       }
+      console.log('appData', appData)
       yield put({
         type: 'updateAppListData',
         payload: {
-          appList: res.feed
+          appData: JSON.parse(JSON.stringify(appData))
         }
       });
-      return Promise.resolve(res);
+      yield put({
+        type: 'updatePullUpLoad',
+        payload: {
+          isPullUpLoad: false
+        }
+      })
     }
   },
 
   reducers: {
     updateRecommendData: (state, action) => ({...state, ...action.payload}),
     updateAppListData: (state, action) => ({...state, ...action.payload}),
+    updatePullUpLoad: (state, action) => ({...state, ...action.payload}),
   }
 }

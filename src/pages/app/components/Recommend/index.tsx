@@ -3,7 +3,7 @@ import { connect } from "dva";
 import { Action, Dispatch } from "redux";
 import Scroll from '@/components/Scroll'
 
-import { ListData } from '@/interface/app'
+import { EntryData } from '@/interface/app'
 import styles from './index.less'
 
 
@@ -48,7 +48,7 @@ export default class RecommendView extends React.PureComponent<RecommendViewProp
           >
             <ul className={styles.recommendContent}>
               {
-                this.props.recommendData.entry.map((item, index) => {
+                this.props.recommendData.map((item, index) => {
                   const image = item["im:image"][2].label;
                   const name = item["im:name"].label;
                   const category = item.category.attributes.label;
@@ -71,7 +71,7 @@ export default class RecommendView extends React.PureComponent<RecommendViewProp
 
 interface RecommendViewProps {
   dispatch?: Dispatch<Action>,
-  recommendData?: ListData
+  recommendData?: EntryData[]
 }
 
 interface RecommendViewState {

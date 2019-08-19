@@ -9,11 +9,17 @@ const proxy = {
    */
   'GET /api/getAppListData': (req, res) => {
     const appListData = require('../src/data/appListData.json');
-    const data = Object.assign({}, appListData);
+    const data = JSON.parse(JSON.stringify(appListData));
     const query = req.query;
     if (query && query.page && query.page_size) {
-      const { page, page_size } = query;
-      data.feed.entry = data.feed.entry.slice(Number(page) - 1, Number(page) * Number(page_size))
+      const page = Number(query.page);
+      const page_size = Number(query.page_size);
+      data.feed.attributes = {
+        total: appListData.feed.entry.length,
+        page,
+        page_size
+      }
+      data.feed.entry = data.feed.entry.slice((page - 1) * page_size, page * page_size)
       res.send(data);
       return;
     }
