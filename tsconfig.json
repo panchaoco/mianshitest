@@ -14,7 +14,7 @@
     },
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
   },
   "typeRoots": [
     "node_modules/@types"

@@ -1,0 +1,44 @@
+.appList {
+  width: 100%;
+  padding: .5rem .3rem 0;
+  box-sizing: border-box;
+  ul {
+    li {
+      display: flex;
+      padding: .3rem 0;
+      border-bottom: 1px solid #ddd;
+      strong {
+        font-weight: 400;
+        font-size: .48rem;
+        line-height: 1.8rem;
+      }
+      img {
+        width: 1.8rem;
+        height: 1.8rem;
+        margin: 0 .5rem;
+      }
+      .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        span {
+          font-size: .30rem;
+        }
+      }
+      &:nth-child(odd) {
+        img {
+          border-radius: .3rem;
+        }
+      }
+      &:nth-child(even) {
+        img {
+          border-radius: 0.9rem;
+        }
+      }
+    }
+  }
+}
+.loading {
+  text-align: center;
+  margin: 0 auto;
+}
