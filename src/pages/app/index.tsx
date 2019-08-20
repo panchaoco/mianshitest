@@ -35,10 +35,12 @@ export default class AppIndexUI extends React.PureComponent<AppIndexProps, AppIn
 
   componentDidMount(): void {
     this.getAppListData();
+
   }
 
   public componentWillReceiveProps(nextProps: Readonly<AppIndexProps>, nextContext: any): void {
     // this.state.fn();
+
   }
 
   private getAppListData = (search?: string) => {

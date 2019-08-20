@@ -1,4 +1,5 @@
 import { IConfig } from 'umi-types';
+const path = require('path');
 
 // ref: https://umijs.org/config/
 const config =  {
@@ -13,13 +14,14 @@ const config =  {
       dll: false,
       pwa: {
         manifestOptions: {
-          srcPath: './manifest.webmanifest'
+          // 默认值为 'src/manifest.json'
+          srcPath: 'public/manifest.json'
         },
         workboxPluginMode: 'InjectManifest',
         workboxOptions: {
           importWorkboxFrom: 'local',
-          swSrc: './service-worker.js',
-          swDest: 'my-dest-sw.js'
+          // 默认值为 'src/service-worker.js'
+          swSrc: 'src/service-worker.js'
         }
       },
       routes: {

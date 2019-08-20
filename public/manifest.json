@@ -1,0 +1,8 @@
+{
+  "name": "TestApp",
+  "short_name": "AppStore",
+  "display": "fullscreen",
+  "scope": "/",
+  "start_url": "./?homescreen=true",
+  "orientation": "portrait"
+}
