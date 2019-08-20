@@ -4,6 +4,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
   .headerTop {
     display: flex;
     padding: .2rem 0;
@@ -20,11 +21,18 @@
       padding-left: .2rem;
     }
   }
-  .bodyContent {
-    padding-top: 0.02rem;
-    flex: 1;
+  .pullFooter {
+    height: 1rem;
+    .loading {
+      text-align: center;
+      line-height: 1rem;
+      font-size: .32rem;
+      color: #7b7b7b;
+    }
   }
+
 }
+
 
 .listView {
   flex: 1;

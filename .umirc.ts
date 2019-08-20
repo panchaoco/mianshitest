@@ -1,7 +1,7 @@
 import { IConfig } from 'umi-types';
 
 // ref: https://umijs.org/config/
-const config: IConfig =  {
+const config =  {
   treeShaking: true,
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
@@ -11,7 +11,17 @@ const config: IConfig =  {
       dynamicImport: false,
       title: 'my-test-app',
       dll: false,
-
+      pwa: {
+        manifestOptions: {
+          srcPath: './manifest.webmanifest'
+        },
+        workboxPluginMode: 'InjectManifest',
+        workboxOptions: {
+          importWorkboxFrom: 'local',
+          swSrc: './service-worker.js',
+          swDest: 'my-dest-sw.js'
+        }
+      },
       routes: {
         exclude: [
           /models\//,
@@ -23,6 +33,8 @@ const config: IConfig =  {
       },
     }],
   ],
+
+
 }
 
 export default config;

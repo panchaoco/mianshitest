@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from "dva";
 import { Action, Dispatch } from "redux";
-import Scroll from '@/components/Scroll'
+import Slide from '@/components/Slide'
 
 import { EntryData } from '@/interface/app'
 import styles from './index.less'
@@ -31,20 +31,15 @@ export default class RecommendView extends React.PureComponent<RecommendViewProp
     }
   }
 
-  private setScrollX(el) {
-    this.setState({
-      reactSwipeEl: el
-    }, () => {
-    })
-  }
 
   public render() {
     return (
       <div className={styles.recommend}>
         <h2>推荐</h2>
         {
-          this.props.recommendData ? <Scroll
+          this.props.recommendData ? <Slide
             options={this.state.scrollOptions}
+            id={'slide'}
           >
             <ul className={styles.recommendContent}>
               {
@@ -62,7 +57,7 @@ export default class RecommendView extends React.PureComponent<RecommendViewProp
                 })
               }
             </ul>
-          </Scroll> : null
+          </Slide> : null
         }
       </div>
     )

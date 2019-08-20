@@ -10,7 +10,7 @@ BScroll.use(ObserveDom);
 
 // @ts-ignore
 @connect(({ app }) => ({
-  isPullUpLoad: app.isPullUpLoad
+  loadingStatus: app.loadingStatus
 }))
 export default class ScrollView extends React.PureComponent<ScrollViewProps, ScrollViewState> {
   private scroll;
@@ -25,32 +25,36 @@ export default class ScrollView extends React.PureComponent<ScrollViewProps, Scr
   }
 
   public componentDidMount(): void {
-    this.initScroll();
   }
 
-  public componentWillReceiveProps(nextProps: Readonly<ScrollViewProps>, nextContext: any): void {
-    if (this.scroll && this.scroll.finishPullUp && !nextProps.isPullUpLoad) {
-      this.scroll.finishPullUp();
-      this.scroll.refresh();
-    }
-  }
 
   public componentDidUpdate(prevProps: Readonly<ScrollViewProps>, prevState: Readonly<ScrollViewState>, snapshot?: any): void {
 
+    if (this.scroll && this.scroll.finishPullUp) {
+      this.scroll.refresh();
+    }
   }
 
 
   private initScroll = () => {
     setTimeout(() => {
-      this.scroll = new BScroll(this.props.id ? `#${this.props.id}` : '#wrapper', this.props.options);
-      if (this.props.options.pullUpLoad) {
-        this.isPullUpLoad = true;
-        this.scroll.on('pullingUp', () => {
-          if (this.props.pullingUp) {
-            this.props.pullingUp();
-            this.isPullUpLoad = false;
-          }
-        })
+      if (!this.scroll) {
+        this.scroll = new BScroll(this.props.id ? `#${this.props.id}` : '#wrapper', this.props.options);
+        if (this.props.options.pullUpLoad) {
+          this.scroll.on('pullingUp', () => {
+            if (this.isPullUpLoad) return;
+            if (this.props.pullingUp) {
+              this.isPullUpLoad = true;
+              this.props.pullingUp();
+            }
+          });
+          // this.scroll.finishPullUp();
+        }
+      } else  {
+        console.log('this.scroll.refresh();')
+        this.scroll.finishPullUp();
+        this.scroll.refresh();
+        this.isPullUpLoad = false;
       }
     }, 20)
   }
@@ -58,15 +62,20 @@ export default class ScrollView extends React.PureComponent<ScrollViewProps, Scr
   public render() {
     return (
       <div className={`${styles.scrollWrapper} .wrapper`} id={this.props.id ? this.props.id : 'wrapper'} ref={(el) => {
+        this.initScroll();
       }}>
-        {this.props.children}
+        <section className={`${styles.scrollContent}`}>
+          {
+            React.Children.map(this.props.children, (child => child))
+          }
+        </section>
       </div>
     )
   }
 }
 
 interface ScrollViewProps {
-  isPullUpLoad?: boolean,
+  loadingStatus?: number,
   options: {
     click?: boolean,
     scrollY?: boolean,

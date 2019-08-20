@@ -6,7 +6,7 @@ export default {
   state: {
     recommendData: [],
     appData: null,
-    isPullUpLoad: false
+    loadingStatus: -1
   },
   effects: {
     *getRecommendData({ payload }: any, { call, put, select }: EffectsCommandMap) {
@@ -22,9 +22,9 @@ export default {
       yield put({
         type: 'updatePullUpLoad',
         payload: {
-          isPullUpLoad: true
+          loadingStatus: 0
         }
-      })
+      });
       const res = yield call(getAppListData, payload);
       let { appData } = yield select(({app}) => ({appData: app.appData}));
       if (!appData) {
@@ -32,6 +32,8 @@ export default {
           attributes: res.feed.attributes,
           entry: res.feed.entry
         })
+      } else if(payload.search) {
+        appData.entry = res.feed.entry;
       } else {
         appData.entry = appData.entry.concat(res.feed.entry)
       }
@@ -45,7 +47,7 @@ export default {
       yield put({
         type: 'updatePullUpLoad',
         payload: {
-          isPullUpLoad: false
+          loadingStatus: 1
         }
       })
     }

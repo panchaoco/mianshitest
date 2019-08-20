@@ -1,6 +1,7 @@
 {
   "extends": "eslint-config-umi",
   "rules": {
-    "no-undef": "off"
+    "no-undef": "off",
+    "implicit-arrow-linebreak": "off"
   }
 }
